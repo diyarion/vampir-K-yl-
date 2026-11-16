@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07080b">
+    <meta name="description" content="Arkadaşlarınla oynayabileceğin, 50 kişiye kadar çevrimiçi Vampir Köylü oyunu.">
+    <title>Gece Köyü — Vampir Köylü</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Gece Köyü ana sayfa">
+          <span class="brand-mark">☾</span>
+          <span>GECE<span class="brand-muted">KÖYÜ</span></span>
+        </a>
+        <span class="online-label"><span class="online-dot"></span> CANLI OYUN</span>
+      </header>
+
+      <section id="home-screen" class="screen home-screen">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="eyebrow-line"></span> GÜNEŞ BATTIĞINDA HERKESİN BİR SIRRI VAR</span>
+          <h1>Köye <span>gece</span> çöktü.</h1>
+          <p>Vampirler aramızda. Dostlarına güven, ipuçlarını birleştir ve sabaha sağ çık.</p>
+        </div>
+        <div class="home-grid">
+          <form id="create-form" class="panel create-panel">
+            <div class="panel-icon">✦</div>
+            <div>
+              <span class="panel-kicker">YENİ BİR MACERA</span>
+              <h2>Oda kur</h2>
+              <p>Bir oda aç, arkadaşlarını kodla davet et.</p>
+            </div>
+            <label for="create-name">Oyuncu adın</label>
+            <input id="create-name" name="name" maxlength="20" placeholder="Örn. Gecekuşu" autocomplete="nickname" required>
+            <button class="button button-primary" type="submit">Oda oluştur <span>↗</span></button>
+          </form>
+
+          <form id="join-form" class="panel join-panel">
+            <div class="panel-icon panel-icon-dark">⌁</div>
+            <div>
+              <span class="panel-kicker">ARKADAŞLARIN BEKLİYOR</span>
+              <h2>Oyuna katıl</h2>
+              <p>Oda kodunu gir ve köydeki yerini al.</p>
+            </div>
+            <label for="join-name">Oyuncu adın</label>
+            <input id="join-name" name="name" maxlength="20" placeholder="Örn. Gecekuşu" autocomplete="nickname" required>
+            <label for="room-code">Oda kodu</label>
+            <input id="room-code" class="code-input" name="code" maxlength="5" placeholder="ABCDE" autocomplete="off" required>
+            <button class="button button-dark" type="submit">Koda bağlan <span>→</span></button>
+          </form>
+        </div>
+        <div class="feature-row">
+          <div><span class="feature-symbol">♟</span><strong>4–50</strong><small>oyuncu</small></div>
+          <i></i>
+          <div><span class="feature-symbol">◷</span><strong>Canlı</strong><small>çok oyunculu</small></div>
+          <i></i>
+          <div><span class="feature-symbol">♜</span><strong>5 rol</strong><small>her oyunda farklı</small></div>
+        </div>
+        <p id="home-error" class="error-message" role="alert"></p>
+      </section>
+
+      <section id="lobby-screen" class="screen hidden">
+        <div class="game-heading">
+          <span class="eyebrow"><span class="eyebrow-line"></span> ARKADAŞLARINI DAVET ET</span>
+          <h1>Köy meydanı</h1>
+        </div>
+        <div class="lobby-layout">
+          <div class="panel room-card">
+            <div class="room-topline"><span>ODA KODU</span><span class="room-lock">● ÖZEL ODA</span></div>
+            <div class="room-code-row"><strong id="lobby-code">-----</strong><button id="copy-code" class="copy-button" type="button" aria-label="Oda kodunu kopyala">⧉</button></div>
+            <p>Kodu arkadaşlarınla paylaş. En fazla 50 kişi katılabilir.</p>
+            <div class="room-divider"></div>
+            <div class="players-heading"><strong>Oyuncular</strong><span id="lobby-count">0 / 50</span></div>
+            <div id="lobby-players" class="player-list"></div>
+            <button id="start-game" class="button button-primary" type="button">Oyunu başlat <span>↗</span></button>
+            <p id="start-hint" class="hint">Başlamak için en az 4 oyuncu gerekli.</p>
+          </div>
+          <aside class="panel rules-card">
+            <span class="panel-kicker">NASIL OYNANIR?</span>
+            <h2>Gündüz konuş.<br>Gece hayatta kal.</h2>
+            <ul>
+              <li><span>01</span> Gece vampirler bir kurban seçer.</li>
+              <li><span>02</span> Doktor bir kişiyi korur, dedektif araştırır.</li>
+              <li><span>03</span> Gündüz köy konuşur ve oylamayla şüpheliyi seçer.</li>
+              <li><span>04</span> Vampirleri bulan köylüler kazanır.</li>
+            </ul>
+            <div class="role-preview"><span>🧛</span><span>🕵️</span><span>🩺</span><span>🏹</span></div>
+          </aside>
+        </div>
+        <p id="lobby-error" class="error-message" role="alert"></p>
+      </section>
+
+      <section id="game-screen" class="screen hidden">
+        <div class="game-bar">
+          <div><span class="eyebrow"><span class="eyebrow-line"></span> GECE KÖYÜ</span><h1 id="phase-title">Gece çöktü</h1></div>
+          <div class="game-meta"><span id="game-code" class="code-pill"></span><span id="day-count" class="day-pill"></span></div>
+        </div>
+        <div class="game-layout">
+          <div class="main-column">
+            <div id="role-card" class="role-card">
+              <span id="role-icon" class="role-icon">🌙</span>
+              <div><span id="role-kicker" class="role-kicker">SENİN ROLÜN</span><h2 id="role-name">Rolün</h2><p id="role-description"></p></div>
+            </div>
+            <div id="action-panel" class="panel action-panel"></div>
+            <div class="panel players-card">
+              <div class="players-heading"><div><span class="panel-kicker">MEYDANDA</span><h2>Köylüler</h2></div><span id="game-player-count" class="count-pill"></span></div>
+              <div id="game-players" class="game-player-list"></div>
+            </div>
+          </div>
+          <aside class="panel chat-card">
+            <div class="chat-heading"><div><span class="panel-kicker">KÖY MEYDANI</span><h2 id="chat-title">Sohbet</h2></div><span id="chat-status" class="chat-status">CANLI</span></div>
+            <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+            <form id="chat-form" class="chat-form">
+              <input id="chat-input" maxlength="240" placeholder="Mesajını yaz..." autocomplete="off">
+              <button type="submit" aria-label="Mesaj gönder">↑</button>
+            </form>
+            <p id="chat-hint" class="chat-hint"></p>
+          </aside>
+        </div>
+        <p id="game-error" class="error-message" role="alert"></p>
+      </section>
+    </main>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>
